@@ -49,5 +49,9 @@ export default Plugin.define({
         models: MODELS,
       })
     })
+
+    await ctx.model.transform((editor) => {
+      editor.default.set(PROVIDER_ID, MODEL_ID)
+    })
   },
 })
