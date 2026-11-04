@@ -1,0 +1,22 @@
+{
+  "name": "hanool-local-llm-plugin",
+  "version": "0.1.0",
+  "description": "OpenCode v2 plugin that registers the personal strata local LLM provider",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@opencode/plugin": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "typescript": "^5"
+  }
+}
