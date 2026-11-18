@@ -27,15 +27,11 @@ const MODELS: Model.Info[] = [
   },
 ]
 
-// Personal local LLM endpoint. Override per device with STRATA_BASE_URL / STRATA_API_KEY.
-const DEFAULT_BASE_URL = "my-url"
-const DEFAULT_API_KEY = "my-key"
-
 export default Plugin.define({
   id: "hanool.strata",
   async setup(ctx) {
-    const baseURL = process.env.STRATA_BASE_URL ?? DEFAULT_BASE_URL
-    const apiKey = process.env.STRATA_API_KEY ?? DEFAULT_API_KEY
+    const baseURL = String(ctx.options.baseURL ?? "")
+    const apiKey = String(ctx.options.apiKey ?? "")
 
     await ctx.provider.transform((editor) => {
       editor.add({
