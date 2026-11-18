@@ -15,13 +15,20 @@ model, so the `model` line is optional in each device's config.
 
 ## Endpoint and key
 
-Resolution order (first match wins):
+Set them in the plugin entry's `options` (no defaults are committed, so an
+unconfigured device fails at request time):
 
-1. Env vars `STRATA_BASE_URL` / `STRATA_API_KEY` on the OpenCode server process
-2. `DEFAULT_BASE_URL` / `DEFAULT_API_KEY` constants in `src/index.ts`
+```jsonc
+"plugins": [
+  {
+    "package": "hanool-local-llm-plugin",
+    "options": { "baseURL": "https://your-endpoint/v1", "apiKey": "..." }
+  }
+]
+```
 
-> Replace the placeholder constants before first use, or set the env vars.
-> If the repo is pushed to GitHub, prefer env vars (or keep the repo private).
+During local development the `"package"` can be a path such as
+`"file:///home/hy-imu/dev/hanool/local-llm-opencode-plugin"`.
 
 If the endpoint does not accept `reasoningEffort` request settings for variant
 switching, change the variant entries in `src/index.ts` to use `body`, e.g.
@@ -33,11 +40,8 @@ switching, change the variant entries in `src/index.ts` to use `body`, e.g.
 opencode plugin add github:hy-imu/local-llm-opencode-plugin
 ```
 
-Adjust the GitHub slug to your account/repo. Optional per device:
-
-```sh
-export STRATA_API_KEY=***   # only if the endpoint key differs from the repo default
-```
+Adjust the GitHub slug to your account/repo. Then add the plugin entry with
+your `options` to the global config as shown in [Endpoint and key](#endpoint-and-key).
 
 Config changes reload automatically; if the provider does not appear, run
 `/reload` in the TUI or `opencode service restart`.
@@ -70,8 +74,5 @@ npm install
 npm run typecheck
 ```
 
-Test without GitHub by adding to the global config's `plugins` array:
-
-```jsonc
-{ "package": "file:///home/hy-imu/dev/hanool/local-llm-opencode-plugin" }
-```
+Test without GitHub by adding the object-form entry (path + `options`) from
+[Endpoint and key](#endpoint-and-key) to the global config's `plugins` array.
